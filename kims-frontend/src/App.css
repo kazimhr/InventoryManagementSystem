@@ -25,6 +25,12 @@ ul li a {
 	margin-right: 0px;
 }
 
+@media (max-width: 800px) {
+	#navbar-welcome {
+		display: none;
+	}
+}
+
 /* Navbar Css END */
 
 .data-table {

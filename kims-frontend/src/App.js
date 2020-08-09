@@ -9,8 +9,6 @@ import NavbarTop from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Inventory from './components/Inventory';
 import Salesperson from './components/Salesperson';
-import Retailers from './components/Retailers';
-import Purchase from './components/Purchase';
 import Accounts from './components/Accounts';
 import Invoices from './components/Invoices';
 import Notfound from './components/Notfound';
@@ -28,8 +26,8 @@ function App() {
 					<Route path="/not-found" component={Notfound} />
 					<Route path="/invoices" component={Invoices} />
 					{userService.isAdmin() && <Route path="/accounts" component={Accounts} />}
-					<Route path="/purchase" component={Purchase} />
-					<Route path="/retailers" component={Retailers} />
+					{/* <Route path="/purchase" component={Purchase} />
+					<Route path="/retailers" component={Retailers} /> */}
 					<Route path="/salesperson" component={Salesperson} />
 					<Route path="/inventory" component={Inventory} />
 					<Route path="/" exact component={Dashboard} />

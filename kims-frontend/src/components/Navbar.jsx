@@ -22,7 +22,7 @@ const NavbarTop = () => {
 		<div className="content-div">
 			<Navbar bg="light" expand="lg">
 				<Navbar.Brand id="navbar-welcome">
-					<p>Welcome to Kaza Inventory Management System!!</p>
+					<p>Welcome to Ayzu Inventory Management System!!</p>
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">

@@ -55,27 +55,6 @@ const Sidebar = () => {
 							</div>
 						</Link>
 					</li>
-					<li>
-						<Link to="/retailers" className="link">
-							<div className="row">
-								<div className="col-md-2 custom_icon" />
-								<div className="col-md-10 custom_item_sidebar">
-									<span>Retailers</span>
-								</div>
-							</div>
-						</Link>
-					</li>
-					<li>
-						<Link to="/purchase" className="link">
-							<div className="row">
-								<div className="col-md-2 custom_icon" />
-								<div className="col-md-10 custom_item_sidebar">
-									<span>Purchase</span>
-								</div>
-							</div>
-						</Link>
-					</li>
-
 					{userService.isAdmin() && (
 						<li>
 							<Link to="/accounts" className="link">
@@ -102,8 +81,8 @@ const Sidebar = () => {
 				</ul>
 				<span>
 					<p style={{ color: 'white' }}>
-						Kazim Haider has all the rights for the entire website, he's worked hard on it and also enjoyed
-						it :)
+						Kazim Haider And Naqu has all the rights for the entire website, they've worked hard on it and
+						also enjoyed it :)
 					</p>
 				</span>
 			</nav>
