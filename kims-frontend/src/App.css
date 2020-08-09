@@ -1,0 +1,59 @@
+.content-div {
+	margin-left: auto;
+	width: calc(100% - 230px);
+}
+
+/* Navbar Css */
+
+.social-part .fa {
+	padding-right: 20px;
+}
+ul li a {
+	margin-right: 20px;
+}
+
+#navbar-welcome {
+	font-family: 'Times New Roman', Times, serif;
+	margin-top: 15px;
+	margin-right: calc(100% - 700px);
+	color: gray;
+}
+
+.nav-name {
+	margin-top: 15px;
+	font-family: 'Times New Roman', Times, serif;
+	margin-right: 0px;
+}
+
+/* Navbar Css END */
+
+.data-table {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+}
+
+.btn-add-inventory {
+	position: relative;
+	left: calc(100% - 175px);
+}
+.btn-add-refresh {
+	position: relative;
+	left: calc(100% - 185px);
+}
+
+.err-normal {
+	display: block;
+	color: red;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.err-hidden {
+	display: none;
+}
+
+.page-heading {
+	text-align: center;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
