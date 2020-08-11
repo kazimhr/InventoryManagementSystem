@@ -6,6 +6,7 @@ class InventoryService extends GenericService {
 	addinventory = (data) => this.post('inventory/post', data);
 	deleteinventory = (_id) => this.delete('inventory/' + _id);
 	updateinventory = (_id, data) => this.put('inventory/' + _id, data);
+	updateqntyinventory = (_id, data) => this.put('inventory/qnty/' + _id, data);
 	getinventory = () => this.get('inventory');
 	getSingleinventory = (id) => this.get('inventory/' + id);
 }

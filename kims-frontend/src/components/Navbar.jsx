@@ -4,7 +4,7 @@ import userService from '../services/UserServices';
 import RegisterModal from './auth/RegisterModal';
 import { toast } from 'react-toastify';
 import Button from '@material-ui/core/Button';
-import { Navbar, Nav, NavDropdown, Form } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 
 const NavbarTop = () => {
 	const [ LoginShow, setLoginShow ] = React.useState(false);
@@ -22,11 +22,12 @@ const NavbarTop = () => {
 		<div className="content-div">
 			<Navbar bg="light" expand="lg">
 				<Navbar.Brand id="navbar-welcome">
-					<p>Welcome to Ayzu Inventory Management System!!</p>
+					<p>Welcome to Kavi Inventory Management System!!</p>
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="mr-auto">
+					<Nav className="mr-auto" />
+					<Nav>
 						<ul className="navbar-nav mr-auto mt-2 mt-lg-0">
 							{!userService.isLoggedIn() ? (
 								<li className="nav-item">
@@ -36,26 +37,11 @@ const NavbarTop = () => {
 								</li>
 							) : (
 								<li className="nav-item">
-									<p className="nav-name">
-										Welcome Mr.
-										{userService.getLoggedInUser().name}
-										<Button
-											className="nav-link"
-											onClick={async () => {
-												userService.logout();
-												toast.info('Logged Out', {
-													position: toast.POSITION.TOP_CENTER
-												});
-												await timeout(1500);
-												window.location.reload();
-											}}
-										>
-											Log out
-										</Button>
-									</p>
+									<p className="nav-name">Welcome! Dear, {userService.getLoggedInUser().name}</p>
 								</li>
 							)}
-							{!userService.isLoggedIn() && (
+
+							{!userService.isLoggedIn() ? (
 								<li className="nav-item">
 									<Button
 										className="nav-link"
@@ -66,41 +52,10 @@ const NavbarTop = () => {
 										Register
 									</Button>
 								</li>
-							)}
-						</ul>
-					</Nav>
-				</Navbar.Collapse>
-			</Navbar>
-			{/* <nav className="navbar navbar-expand-sm navbar-light bg-light">
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-toggle="collapse"
-					data-target="#navbarTogglerDemo03"
-					aria-controls="navbarTogglerDemo03"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span className="navbar-toggler-icon" />
-				</button>
-
-				<p id="navbar-welcome">Welcome to Kaza Inventory Management System!!</p>
-
-				<div className="collapse navbar-collapse" id="navbarTogglerDemo03">
-					<ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-						{!userService.isLoggedIn() ? (
-							<li className="nav-item">
-								<Button className="nav-link" onClick={handleLoginShow}>
-									Login
-								</Button>
-							</li>
-						) : (
-							<li className="nav-item">
-								<p className="nav-name">
-									Welcome Mr.
-									{userService.getLoggedInUser().name}
+							) : (
+								<li className="nav-logoutbtn">
 									<Button
-										className="nav-link"
+										className="nav-link nav-loginbtn"
 										onClick={async () => {
 											userService.logout();
 											toast.info('Logged Out', {
@@ -112,27 +67,14 @@ const NavbarTop = () => {
 									>
 										Log out
 									</Button>
-								</p>
-							</li>
-						)}
-						{!userService.isLoggedIn() && (
-							<li className="nav-item">
-								<Button
-									className="nav-link"
-									onClick={() => {
-										handleRegisterShow();
-									}}
-								>
-									Register
-								</Button>
-							</li>
-						)}
-					</ul>
-				</div>
-			</nav>
-
+								</li>
+							)}
+						</ul>
+					</Nav>
+				</Navbar.Collapse>
+			</Navbar>
 			<LoginModal show={LoginShow} onHide={handleLoginClose} />
-			<RegisterModal show={RegisterShow} onHide={handleRegisterClose} /> */}
+			<RegisterModal show={RegisterShow} onHide={handleRegisterClose} />
 		</div>
 	);
 };

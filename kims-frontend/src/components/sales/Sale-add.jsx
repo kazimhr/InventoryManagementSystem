@@ -1,42 +1,51 @@
 import React from 'react';
 import * as ReactBootstrap from 'react-bootstrap';
-import inventoryService from '../services/InventoryServices';
+import saleService from '../../services/SaleServices';
 
-function MyVerticallyCenteredModalUpdate(props) {
+function MyVerticallyCenteredModal(props) {
 	const [ validated, setValidated ] = React.useState(false);
-	const [ product_id, setProduct_id ] = React.useState(0);
-	const [ product_name, setProduct_name ] = React.useState('');
-	const [ product_qnty, setProduct_qnty ] = React.useState(0);
-	const [ company, setCompany ] = React.useState('');
-	const [ compError, setCompError ] = React.useState(false);
+	const [ salesman_id, setSalesman_id ] = React.useState(0);
+	const [ salesman_name, setSalesman_name ] = React.useState('');
+	const [ salesman_contact, setSalesman_contact ] = React.useState(0);
+	const [ credit_due, setCredit_due ] = React.useState(0);
+	const [ idcheck, setIdcheck ] = React.useState(false);
 
-	React.useEffect(
-		() => {
-			setProduct_id(props.prod_id);
-			setProduct_name(props.prod_name);
-			setProduct_qnty(props.prod_qnty);
-			setCompany(props.prod_company);
-		},
-		[ props.prod_id, props.prod_name, props.prod_qnty, props.prod_company ]
-	);
+	const Idchecking = async (prod_id) => {
+		saleService
+			.getSinglesale(prod_id)
+			.then((data) => {
+				if (typeof data != 'string') {
+					setIdcheck(true);
+					setValidated(false);
+				} else {
+					setIdcheck(false);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				setIdcheck(false);
+			});
+	};
 
 	const handleSubmit = async (event) => {
-		setCompError(false);
+		setIdcheck(false);
 		const form = event.currentTarget;
 		if (form.checkValidity() === false) {
 			event.preventDefault();
 			event.stopPropagation();
-		} else if (company === '' || company === 'Choose the company') {
-			setCompError(true);
-			event.preventDefault();
-			event.stopPropagation();
+		} else if (idcheck === true) {
+			setValidated(false);
 		} else {
-			setProduct_id(props.prod_id);
 			setValidated(true);
-			inventoryService
-				.updateinventory(product_id, { product_id, product_name, product_qnty, company })
+			saleService
+				.addsale({
+					salesman_id,
+					salesman_name,
+					salesman_contact,
+					credit_due
+				})
 				.then((data) => {
-					props.onSubmit();
+					console.log(data);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -45,9 +54,17 @@ function MyVerticallyCenteredModalUpdate(props) {
 	};
 
 	return (
-		<ReactBootstrap.Modal {...props} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
-			<ReactBootstrap.Modal.Header closeButton>
-				<ReactBootstrap.Modal.Title id="contained-modal-title-vcenter">Edit</ReactBootstrap.Modal.Title>
+		<ReactBootstrap.Modal
+			{...props}
+			size="md"
+			aria-labelledby="contained-modal-title-vcenter"
+			centered
+			backdrop="static"
+		>
+			<ReactBootstrap.Modal.Header>
+				<ReactBootstrap.Modal.Title id="contained-modal-title-vcenter">
+					Add New SalesPerson
+				</ReactBootstrap.Modal.Title>
 			</ReactBootstrap.Modal.Header>
 			<ReactBootstrap.Modal.Body>
 				<ReactBootstrap.Form validated={validated} onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
@@ -57,29 +74,31 @@ function MyVerticallyCenteredModalUpdate(props) {
 						</ReactBootstrap.Form.Label>
 						<ReactBootstrap.Col sm={8}>
 							<ReactBootstrap.Form.Control
-								value={product_id}
 								type="number"
 								required
 								placeholder="Unique id"
 								min="0"
-								disabled
+								onChange={(e) => {
+									setSalesman_id(e.target.value);
+								}}
 							/>
+							<span className={idcheck === true ? 'err-normal' : 'err-hidden'}>Id is not unique</span>
 						</ReactBootstrap.Col>
 						<ReactBootstrap.Form.Control.Feedback>Looks good!</ReactBootstrap.Form.Control.Feedback>
 						<span />
 					</ReactBootstrap.Form.Group>
 					<ReactBootstrap.Form.Group as={ReactBootstrap.Row} controlId="validationCustom02">
 						<ReactBootstrap.Form.Label column sm={4}>
-							Product Name
+							Name
 						</ReactBootstrap.Form.Label>
 						<ReactBootstrap.Col sm={8}>
 							<ReactBootstrap.Form.Control
-								value={product_name}
 								required
 								type="text"
 								placeholder="Name"
+								onClick={() => Idchecking(salesman_id)}
 								onChange={(e) => {
-									setProduct_name(e.target.value);
+									setSalesman_name(e.target.value);
 								}}
 							/>
 						</ReactBootstrap.Col>
@@ -87,57 +106,48 @@ function MyVerticallyCenteredModalUpdate(props) {
 					</ReactBootstrap.Form.Group>
 					<ReactBootstrap.Form.Group as={ReactBootstrap.Row} controlId="validationCustom03">
 						<ReactBootstrap.Form.Label column sm={4}>
-							Product Quantity
+							Contact
 						</ReactBootstrap.Form.Label>
 						<ReactBootstrap.Col sm={8}>
 							<ReactBootstrap.Form.Control
-								value={product_qnty}
 								required
+								min="0"
 								type="number"
-								placeholder="Quantity"
+								placeholder="Contact"
+								onClick={() => Idchecking(salesman_id)}
 								onChange={(e) => {
-									setProduct_qnty(e.target.value);
+									setSalesman_contact(e.target.value);
 								}}
 							/>
 						</ReactBootstrap.Col>
 						<ReactBootstrap.Form.Control.Feedback>Looks good!</ReactBootstrap.Form.Control.Feedback>
 					</ReactBootstrap.Form.Group>
-					<ReactBootstrap.Form.Group as={ReactBootstrap.Row} controlId="validationCustom04">
+					<ReactBootstrap.Form.Group as={ReactBootstrap.Row} controlId="validationCustom03">
 						<ReactBootstrap.Form.Label column sm={4}>
-							Company
+							Credit Due
 						</ReactBootstrap.Form.Label>
-						<ReactBootstrap.Form.Group controlId="exampleForm.SelectCustom">
-							<ReactBootstrap.Col sm={12}>
-								<ReactBootstrap.Form.Control
-									value={company}
-									required
-									as="select"
-									custom
-									onChange={(e) => {
-										setCompany(e.target.value);
-									}}
-								>
-									<option defaultValue>Choose the company</option>
-									<option>Lipton Pvt Limited</option>
-									<option>Kurleez</option>
-									<option>Lay's</option>
-									<option>Nescafe</option>
-								</ReactBootstrap.Form.Control>
-							</ReactBootstrap.Col>
-							<span className={compError === true ? 'err-normal' : 'err-hidden'}>
-								Please choose a company
-							</span>
-						</ReactBootstrap.Form.Group>
+						<ReactBootstrap.Col sm={8}>
+							<ReactBootstrap.Form.Control
+								required
+								min="0"
+								type="number"
+								placeholder="Credit Due"
+								onClick={() => Idchecking(salesman_id)}
+								onChange={(e) => {
+									setCredit_due(e.target.value);
+								}}
+							/>
+						</ReactBootstrap.Col>
 						<ReactBootstrap.Form.Control.Feedback>Looks good!</ReactBootstrap.Form.Control.Feedback>
 					</ReactBootstrap.Form.Group>
 					<ReactBootstrap.Modal.Footer>
-						<ReactBootstrap.Button type="submit">Submit</ReactBootstrap.Button>
+						<ReactBootstrap.Button type="submit" disabled={idcheck === true ? true : false}>
+							Submit
+						</ReactBootstrap.Button>
 
 						<span
 							onClick={() => {
-								setProduct_name(props.prod_name);
-								setProduct_qnty(props.prod_qnty);
-								setCompany(props.prod_company);
+								setIdcheck(false);
 							}}
 						>
 							<ReactBootstrap.Button onClick={props.onHide}>Close</ReactBootstrap.Button>
@@ -148,4 +158,4 @@ function MyVerticallyCenteredModalUpdate(props) {
 		</ReactBootstrap.Modal>
 	);
 }
-export default MyVerticallyCenteredModalUpdate;
+export default MyVerticallyCenteredModal;

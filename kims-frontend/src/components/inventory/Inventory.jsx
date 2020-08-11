@@ -6,9 +6,9 @@ import MyVerticallyCenteredModal from './Inventory-add';
 import MyVerticallyCenteredModalUpdate from './Inventory-update';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import inventoryService from '../services/InventoryServices';
+import inventoryService from '../../services/InventoryServices';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import userService from '../services/UserServices';
+import userService from '../../services/UserServices';
 
 //main function of inventory
 const Inventory = (props) => {
@@ -19,6 +19,7 @@ const Inventory = (props) => {
 	const [ prod_name, setProduct_name ] = React.useState('');
 	const [ prod_qnty, setProduct_qnty ] = React.useState(0);
 	const [ prod_company, setCompany ] = React.useState('');
+	const [ prod_price, setPrice ] = React.useState(0);
 
 	//modal function that contains the body of the modal
 
@@ -47,7 +48,7 @@ const Inventory = (props) => {
 				<td>{products.product_name}</td>
 				<td>{products.product_qnty}</td>
 				<td>{products.company}</td>
-				<td>{products.date}</td>
+				<td>{products.price}</td>
 				<td>
 					<Fab
 						size="small"
@@ -55,7 +56,7 @@ const Inventory = (props) => {
 						style={{ marginRight: '20px' }}
 						onClick={(e) => {
 							setModalShowupdate(true);
-							setProduct_id(products.product_id);
+							// setProduct_id(products.product_id);
 							inventoryService
 								.getSingleinventory(products.product_id)
 								.then((data) => {
@@ -63,6 +64,7 @@ const Inventory = (props) => {
 									setProduct_name(data.product_name);
 									setProduct_qnty(data.product_qnty);
 									setCompany(data.company);
+									setPrice(data.price);
 									getProducts();
 								})
 								.catch((err) => {
@@ -100,10 +102,21 @@ const Inventory = (props) => {
 	return (
 		<div className="content-div">
 			<h1 className="page-heading">Inventory</h1>
-			<Fab color="primary" className="btn-add-refresh" onClick={getProducts}>
+			<Fab
+				color="primary"
+				className="btn-add-refresh"
+				onClick={getProducts}
+				disabled={userService.isLoggedIn() ? false : true}
+			>
 				<RefreshIcon />
 			</Fab>
-			<Fab color="primary" aria-label="add" className="btn-add-inventory" onClick={() => setModalShow(true)}>
+			<Fab
+				color="primary"
+				aria-label="add"
+				className="btn-add-inventory"
+				onClick={() => setModalShow(true)}
+				disabled={userService.isLoggedIn() ? false : true}
+			>
 				<AddIcon />
 			</Fab>
 			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
@@ -114,6 +127,7 @@ const Inventory = (props) => {
 				prod_name={prod_name}
 				prod_qnty={prod_qnty}
 				prod_company={prod_company}
+				prod_price={prod_price}
 				onSubmit={getProducts}
 			/>
 
@@ -126,12 +140,12 @@ const Inventory = (props) => {
 							<th>Product Name</th>
 							<th>Product Quantity</th>
 							<th>Company</th>
-							<th>Date</th>
+							<th>Unit Price</th>
 							<th>Actions</th>
 							{/* <th>Actions</th> */}
 						</tr>
 					</thead>
-					<tbody>{products.map(renderProducts)}</tbody>
+					{userService.isLoggedIn() && <tbody>{products.map(renderProducts)}</tbody>}
 				</ReactBootstrap.Table>
 			</div>
 		</div>

@@ -4,9 +4,9 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import accountService from '../services/AccountServices';
+import accountService from '../../services/AccountServices';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import userService from '../services/UserServices';
+import userService from '../../services/UserServices';
 import MyVerticallyCenteredModalAccount from './Account-add';
 import MyVerticallyCenteredModalAccountUpdate from './Account-update';
 

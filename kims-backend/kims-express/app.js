@@ -11,6 +11,7 @@ var usersRouter = require('./routes/users');
 var inventoryRouter = require('./routes/kims-api/inventoryRouter');
 var accountRouter = require('./routes/kims-api/accountRouter');
 var invoiceRouter = require('./routes/kims-api/invoiceRouter');
+var saleRouter = require('./routes/kims-api/saleRouter');
 var app = express();
 
 // view engine setup
@@ -29,6 +30,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/inventory', inventoryRouter);
 app.use('/api/account', accountRouter);
 app.use('/api/invoice', invoiceRouter);
+app.use('/api/sale', saleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

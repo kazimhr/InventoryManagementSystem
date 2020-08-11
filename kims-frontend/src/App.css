@@ -15,14 +15,20 @@ ul li a {
 #navbar-welcome {
 	font-family: 'Times New Roman', Times, serif;
 	margin-top: 15px;
-	margin-right: calc(100% - 700px);
+	/* margin-right: calc(100% - 850px); */
 	color: gray;
+	/* border: 2px red solid; */
 }
 
 .nav-name {
 	margin-top: 15px;
 	font-family: 'Times New Roman', Times, serif;
-	margin-right: 0px;
+}
+
+.nav-logoutbtn {
+	/* border: 2px red solid; */
+	margin-top: 9px;
+	margin-left: 12px;
 }
 
 @media (max-width: 800px) {

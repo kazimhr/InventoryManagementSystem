@@ -6,6 +6,7 @@ const inventorySchema = mongoose.Schema({
 	product_name: String,
 	product_qnty: Number,
 	company: String,
+	price: Number,
 	date: { type: Date, default: Date.now }
 });
 
@@ -16,7 +17,8 @@ function validateInventory(data) {
 		product_id: Joi.number().required(),
 		product_name: Joi.string().required(),
 		product_qnty: Joi.number().required(),
-		company: Joi.string().required()
+		company: Joi.string().required(),
+		price: Joi.number().min(0).required()
 	});
 
 	return schema.validate(data, { abortEarly: false });

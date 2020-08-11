@@ -5,10 +5,10 @@ import { toast } from 'react-toastify';
 import LoginModal from './LoginModal';
 
 const RegisterModal = (props) => {
-	const [ email, setEmail ] = React.useState('kazimhr@hotmail.com');
-	const [ password, setPassword ] = React.useState('test');
-	const [ confirmPassword, setConfirmPassword ] = React.useState('test');
-	const [ name, setName ] = React.useState('kazim');
+	const [ email, setEmail ] = React.useState('');
+	const [ password, setPassword ] = React.useState('');
+	const [ confirmPassword, setConfirmPassword ] = React.useState('');
+	const [ name, setName ] = React.useState('');
 
 	const [ LoginShow, setLoginShow ] = React.useState(false);
 	const handleLoginClose = () => setLoginShow(false);
@@ -49,7 +49,6 @@ const RegisterModal = (props) => {
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 							/>
-							<Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
 						</Form.Group>
 						<Form.Group controlId="formBasicEmail">
 							<Form.Label>Email address</Form.Label>
@@ -80,10 +79,6 @@ const RegisterModal = (props) => {
 								onChange={(e) => setConfirmPassword(e.target.value)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicCheckbox">
-							<Form.Check type="checkbox" label="Check me out" />
-						</Form.Group>
-
 						<Modal.Footer>
 							<Button variant="primary" onClick={submitCheck}>
 								Submit

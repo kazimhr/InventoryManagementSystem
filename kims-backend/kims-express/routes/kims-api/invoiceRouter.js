@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var { Invoice } = require('../../models/invoicesModel');
-var { pd } = require('../../models/invoicesModel');
-// const validateAccount = require('../../middleware/validateAccount');
+const validateInvoice = require('../../middleware/validateInvoices');
 const auth = require('../../middleware/auth');
 const admin = require('../../middleware/admin');
 
@@ -23,7 +22,8 @@ router.get('/detail/:id', async (req, res) => {
 router.post('/post', async (req, res) => {
 	const postInventory = new Invoice({
 		salesman_id: req.body.salesman_id,
-		product_details: req.body.product_details
+		product_details: req.body.product_details,
+		total: req.body.total
 	});
 
 	await postInventory.save();
@@ -35,6 +35,7 @@ router.put('/:id', async (req, res) => {
 	var prod = await Invoice.findById(req.params.id);
 	prod.salesman_id = req.body.salesman_id;
 	prod.product_details = req.body.product_details;
+	prod.total = req.body.total;
 	await prod.save();
 	return res.send(prod);
 });

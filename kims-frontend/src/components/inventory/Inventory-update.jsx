@@ -1,37 +1,29 @@
 import React from 'react';
 import * as ReactBootstrap from 'react-bootstrap';
-import inventoryService from '../services/InventoryServices';
+import inventoryService from '../../services/InventoryServices';
 
-function MyVerticallyCenteredModal(props) {
+function MyVerticallyCenteredModalUpdate(props) {
 	const [ validated, setValidated ] = React.useState(false);
 	const [ product_id, setProduct_id ] = React.useState(0);
 	const [ product_name, setProduct_name ] = React.useState('');
 	const [ product_qnty, setProduct_qnty ] = React.useState(0);
 	const [ company, setCompany ] = React.useState('');
+	const [ price, setPrice ] = React.useState(0);
 	const [ compError, setCompError ] = React.useState(false);
-	const [ idcheck, setIdcheck ] = React.useState(false);
 
-	const Idchecking = async (prod_id) => {
-		console.log(prod_id);
-		inventoryService
-			.getSingleinventory(prod_id)
-			.then((data) => {
-				if (typeof data != 'string') {
-					setIdcheck(true);
-					setValidated(false);
-				} else {
-					setIdcheck(false);
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-				setIdcheck(false);
-			});
-	};
+	React.useEffect(
+		() => {
+			setProduct_id(props.prod_id);
+			setProduct_name(props.prod_name);
+			setProduct_qnty(props.prod_qnty);
+			setCompany(props.prod_company);
+			setPrice(props.prod_price);
+		},
+		[ props.prod_id, props.prod_name, props.prod_qnty, props.prod_company, props.prod_price ]
+	);
 
 	const handleSubmit = async (event) => {
 		setCompError(false);
-		setIdcheck(false);
 		const form = event.currentTarget;
 		if (form.checkValidity() === false) {
 			event.preventDefault();
@@ -40,19 +32,13 @@ function MyVerticallyCenteredModal(props) {
 			setCompError(true);
 			event.preventDefault();
 			event.stopPropagation();
-		} else if (idcheck === true) {
-			setValidated(false);
 		} else {
+			setProduct_id(props.prod_id);
 			setValidated(true);
 			inventoryService
-				.addinventory({
-					product_id,
-					product_name,
-					product_qnty,
-					company
-				})
+				.updateinventory(product_id, { product_id, product_name, product_qnty, company, price })
 				.then((data) => {
-					console.log(data);
+					props.onSubmit();
 				})
 				.catch((err) => {
 					console.log(err);
@@ -61,17 +47,9 @@ function MyVerticallyCenteredModal(props) {
 	};
 
 	return (
-		<ReactBootstrap.Modal
-			{...props}
-			size="md"
-			aria-labelledby="contained-modal-title-vcenter"
-			centered
-			backdrop="static"
-		>
-			<ReactBootstrap.Modal.Header>
-				<ReactBootstrap.Modal.Title id="contained-modal-title-vcenter">
-					Add New Product
-				</ReactBootstrap.Modal.Title>
+		<ReactBootstrap.Modal {...props} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+			<ReactBootstrap.Modal.Header closeButton>
+				<ReactBootstrap.Modal.Title id="contained-modal-title-vcenter">Edit</ReactBootstrap.Modal.Title>
 			</ReactBootstrap.Modal.Header>
 			<ReactBootstrap.Modal.Body>
 				<ReactBootstrap.Form validated={validated} onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
@@ -81,15 +59,13 @@ function MyVerticallyCenteredModal(props) {
 						</ReactBootstrap.Form.Label>
 						<ReactBootstrap.Col sm={8}>
 							<ReactBootstrap.Form.Control
+								value={product_id}
 								type="number"
 								required
 								placeholder="Unique id"
 								min="0"
-								onChange={(e) => {
-									setProduct_id(e.target.value);
-								}}
+								disabled
 							/>
-							<span className={idcheck === true ? 'err-normal' : 'err-hidden'}>Id is not unique</span>
 						</ReactBootstrap.Col>
 						<ReactBootstrap.Form.Control.Feedback>Looks good!</ReactBootstrap.Form.Control.Feedback>
 						<span />
@@ -100,10 +76,10 @@ function MyVerticallyCenteredModal(props) {
 						</ReactBootstrap.Form.Label>
 						<ReactBootstrap.Col sm={8}>
 							<ReactBootstrap.Form.Control
+								value={product_name}
 								required
 								type="text"
 								placeholder="Name"
-								onClick={() => Idchecking(product_id)}
 								onChange={(e) => {
 									setProduct_name(e.target.value);
 								}}
@@ -117,12 +93,31 @@ function MyVerticallyCenteredModal(props) {
 						</ReactBootstrap.Form.Label>
 						<ReactBootstrap.Col sm={8}>
 							<ReactBootstrap.Form.Control
+								value={product_qnty}
 								required
+								min="0"
 								type="number"
 								placeholder="Quantity"
-								onClick={() => Idchecking(product_id)}
 								onChange={(e) => {
 									setProduct_qnty(e.target.value);
+								}}
+							/>
+						</ReactBootstrap.Col>
+						<ReactBootstrap.Form.Control.Feedback>Looks good!</ReactBootstrap.Form.Control.Feedback>
+					</ReactBootstrap.Form.Group>
+					<ReactBootstrap.Form.Group as={ReactBootstrap.Row} controlId="validationCustom03">
+						<ReactBootstrap.Form.Label column sm={4}>
+							Product Unit Price
+						</ReactBootstrap.Form.Label>
+						<ReactBootstrap.Col sm={8}>
+							<ReactBootstrap.Form.Control
+								value={price}
+								required
+								min="0"
+								type="number"
+								placeholder="Unit Price"
+								onChange={(e) => {
+									setPrice(e.target.value);
 								}}
 							/>
 						</ReactBootstrap.Col>
@@ -135,10 +130,10 @@ function MyVerticallyCenteredModal(props) {
 						<ReactBootstrap.Form.Group controlId="exampleForm.SelectCustom">
 							<ReactBootstrap.Col sm={12}>
 								<ReactBootstrap.Form.Control
+									value={company}
 									required
 									as="select"
 									custom
-									onClick={() => Idchecking(product_id)}
 									onChange={(e) => {
 										setCompany(e.target.value);
 									}}
@@ -157,13 +152,13 @@ function MyVerticallyCenteredModal(props) {
 						<ReactBootstrap.Form.Control.Feedback>Looks good!</ReactBootstrap.Form.Control.Feedback>
 					</ReactBootstrap.Form.Group>
 					<ReactBootstrap.Modal.Footer>
-						<ReactBootstrap.Button type="submit" disabled={idcheck === true ? true : false}>
-							Submit
-						</ReactBootstrap.Button>
+						<ReactBootstrap.Button type="submit">Submit</ReactBootstrap.Button>
 
 						<span
 							onClick={() => {
-								setIdcheck(false);
+								setProduct_name(props.prod_name);
+								setProduct_qnty(props.prod_qnty);
+								setCompany(props.prod_company);
 							}}
 						>
 							<ReactBootstrap.Button onClick={props.onHide}>Close</ReactBootstrap.Button>
@@ -174,4 +169,4 @@ function MyVerticallyCenteredModal(props) {
 		</ReactBootstrap.Modal>
 	);
 }
-export default MyVerticallyCenteredModal;
+export default MyVerticallyCenteredModalUpdate;

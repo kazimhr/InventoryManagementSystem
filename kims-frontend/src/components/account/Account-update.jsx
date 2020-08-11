@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactBootstrap from 'react-bootstrap';
-import accountService from '../services/AccountServices';
+import accountService from '../../services/AccountServices';
 
 function MyVerticallyCenteredModalAccountUpdate(props) {
 	const [ validated, setValidated ] = React.useState(false);

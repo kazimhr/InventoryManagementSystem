@@ -21,7 +21,8 @@ router.post('/post', validateInventory, async (req, res) => {
 		product_id: req.body.product_id,
 		product_name: req.body.product_name,
 		product_qnty: req.body.product_qnty,
-		company: req.body.company
+		company: req.body.company,
+		price: req.body.price
 	});
 
 	await postInventory.save();
@@ -47,6 +48,7 @@ router.put('/:id', validateInventory, async (req, res) => {
 		user.product_name = req.body.product_name;
 		user.product_qnty = req.body.product_qnty;
 		user.company = req.body.company;
+		user.price = req.body.price;
 		user.save(function(err) {
 			if (err) {
 				console.error('ERROR!');
@@ -54,6 +56,18 @@ router.put('/:id', validateInventory, async (req, res) => {
 		});
 	});
 
+	res.send(updated);
+});
+
+router.put('/qnty/:id', async (req, res) => {
+	const updated = await Inventory.findOne({ product_id: req.params.id }, function(err, user) {
+		user.product_qnty = user.product_qnty - req.body.product_qnty;
+		user.save(function(err) {
+			if (err) {
+				console.error('ERROR!');
+			}
+		});
+	});
 	res.send(updated);
 });
 

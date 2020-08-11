@@ -6,7 +6,8 @@ import InvoiceAdd from './invoice-add';
 // import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import invoiceService from '../services/InvoiceServices';
+import invoiceService from '../../services/InvoiceServices';
+import userService from '../../services/UserServices';
 
 //main function of inventory
 const Invoice = (props) => {
@@ -59,6 +60,7 @@ const Invoice = (props) => {
 						<tbody>{renderProductsDetails(invoice)}</tbody>
 					</table>
 				</td>
+				<td>{invoice.total}</td>
 				<td>
 					<Fab
 						size="small"
@@ -85,10 +87,21 @@ const Invoice = (props) => {
 	return (
 		<div className="content-div">
 			<h1 className="page-heading">Invoices</h1>
-			<Fab color="primary" className="btn-add-refresh" onClick={getInvoices}>
+			<Fab
+				color="primary"
+				className="btn-add-refresh"
+				onClick={getInvoices}
+				disabled={userService.isLoggedIn() ? false : true}
+			>
 				<RefreshIcon />
 			</Fab>
-			<Fab color="primary" aria-label="add" className="btn-add-inventory" onClick={() => setModalShow(true)}>
+			<Fab
+				color="primary"
+				aria-label="add"
+				className="btn-add-inventory"
+				onClick={() => setModalShow(true)}
+				disabled={userService.isLoggedIn() ? false : true}
+			>
 				<AddIcon />
 			</Fab>
 			<InvoiceAdd show={modalShow} onHide={() => setModalShow(false)} />
@@ -97,11 +110,12 @@ const Invoice = (props) => {
 					<thead>
 						<tr>
 							<th>Salesman Id</th>
-							<th style={{ width: '60%' }}>Product Details</th>
+							<th style={{ width: '40%' }}>Product Details</th>
+							<th style={{ width: '20%' }}>Total</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
-					<tbody>{invoice.map(renderProducts)}</tbody>
+					{userService.isLoggedIn() && <tbody>{invoice.map(renderProducts)}</tbody>}
 				</ReactBootstrap.Table>
 			</div>
 		</div>

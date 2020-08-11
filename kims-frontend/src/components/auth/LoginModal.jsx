@@ -7,6 +7,10 @@ const LoginModal = (props) => {
 	const [ email, setEmail ] = React.useState('kazimhr@hotmail.com');
 	const [ password, setPassword ] = React.useState('test');
 
+	function timeout(delay) {
+		return new Promise((res) => setTimeout(res, delay));
+	}
+
 	return (
 		<div className="content-div-s">
 			<Modal {...props} backdrop="static" keyboard={false}>
@@ -34,21 +38,19 @@ const LoginModal = (props) => {
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicCheckbox">
-							<Form.Check type="checkbox" label="Check me out" />
-						</Form.Group>
 						<Modal.Footer>
 							<Button
 								variant="primary"
 								onClick={(e) =>
 									userService
 										.login(email, password)
-										.then((data) => {
+										.then(async (data) => {
 											console.log(data);
 											toast.success('Login Successful', {
 												position: toast.POSITION.TOP_CENTER
 											});
 											props.onHide();
+											await timeout(1500);
 											window.location.href = '/';
 										})
 										.catch((err) => {
