@@ -111,9 +111,8 @@ function MyVerticallyCenteredModal(props) {
 						<ReactBootstrap.Col sm={8}>
 							<ReactBootstrap.Form.Control
 								required
-								min="0"
 								type="number"
-								placeholder="Contact"
+								placeholder="XXXX-XXXXXXX"
 								onClick={() => Idchecking(salesman_id)}
 								onChange={(e) => {
 									setSalesman_contact(e.target.value);
