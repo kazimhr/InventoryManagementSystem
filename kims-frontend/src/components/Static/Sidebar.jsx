@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from '../logo.png';
-import { Link } from 'react-router-dom';
-import userService from '../services/UserServices';
+import logo from '../../logo.png';
+import { Link } from '../../../node_modules/react-router-dom';
+import userService from '../../services/UserServices';
 
 const Sidebar = () => {
 	return (

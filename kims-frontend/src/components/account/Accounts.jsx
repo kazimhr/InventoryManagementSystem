@@ -119,7 +119,7 @@ const Account = (props) => {
 							<th>Flow</th>
 							<th>Amount</th>
 							<th>Date</th>
-							<th>Actions</th>
+							<th style={{ width: '20%' }}>Actions</th>
 						</tr>
 					</thead>
 					<tbody>{record.map(renderRecords)}</tbody>

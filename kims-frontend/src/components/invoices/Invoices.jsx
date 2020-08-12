@@ -112,7 +112,7 @@ const Invoice = (props) => {
 							<th>Salesman Id</th>
 							<th style={{ width: '40%' }}>Product Details</th>
 							<th style={{ width: '20%' }}>Total</th>
-							<th>Actions</th>
+							<th style={{ width: '20%' }}>Actions</th>
 						</tr>
 					</thead>
 					{userService.isLoggedIn() && <tbody>{invoice.map(renderProducts)}</tbody>}

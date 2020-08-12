@@ -141,8 +141,7 @@ const Inventory = (props) => {
 							<th>Product Quantity</th>
 							<th>Company</th>
 							<th>Unit Price</th>
-							<th>Actions</th>
-							{/* <th>Actions</th> */}
+							<th style={{ width: '20%' }}>Actions</th>
 						</tr>
 					</thead>
 					{userService.isLoggedIn() && <tbody>{products.map(renderProducts)}</tbody>}

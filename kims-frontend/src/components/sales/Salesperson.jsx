@@ -9,11 +9,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import userService from '../../services/UserServices';
 import saleService from '../../services/SaleServices';
+import ModalSaleCredit from './Sale-creditUpdate';
 
 const Sale = (props) => {
 	const [ products, setProducts ] = React.useState([]);
 	const [ modalShow, setModalShow ] = React.useState(false);
 	const [ modalShowupdate, setModalShowupdate ] = React.useState(false);
+	const [ modalCredit, setModalCredit ] = React.useState(false);
 	const [ sale_id, setSaleId ] = React.useState(0);
 	const [ sale_name, setSaleName ] = React.useState('');
 	const [ sale_contact, setSaleContact ] = React.useState(0);
@@ -67,6 +69,7 @@ const Sale = (props) => {
 					<Fab
 						size="small"
 						aria-label="delete"
+						style={{ marginRight: '20px' }}
 						onClick={(e) => {
 							saleService
 								.deletesale(products.salesman_id)
@@ -81,6 +84,17 @@ const Sale = (props) => {
 						disabled={userService.isAdmin() ? false : true}
 					>
 						<DeleteIcon />
+					</Fab>
+					<Fab
+						color=""
+						aria-label="add"
+						size="small"
+						onClick={(e) => {
+							setModalCredit(true);
+							setSaleId(products.salesman_id);
+						}}
+					>
+						<AddIcon />
 					</Fab>
 				</td>
 			</tr>
@@ -108,16 +122,6 @@ const Sale = (props) => {
 			>
 				<AddIcon />
 			</Fab>
-			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
-			<MyVerticallyCenteredModalUpdate
-				show={modalShowupdate}
-				onHide={() => setModalShowupdate(false)}
-				sale_id={sale_id}
-				sale_name={sale_name}
-				sale_contact={sale_contact}
-				sale_creditdue={sale_creditdue}
-				onSubmit={getProducts}
-			/>
 
 			{/* div that displays the table containing data */}
 			<div className="data-table">
@@ -128,12 +132,24 @@ const Sale = (props) => {
 							<th>Name</th>
 							<th>Contact</th>
 							<th>Credit Due</th>
-							<th>Actions</th>
+							<th style={{ width: '20%' }}>Actions</th>
 						</tr>
 					</thead>
 					{userService.isLoggedIn() && <tbody>{products.map(renderProducts)}</tbody>}
 				</ReactBootstrap.Table>
 			</div>
+
+			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
+			<MyVerticallyCenteredModalUpdate
+				show={modalShowupdate}
+				onHide={() => setModalShowupdate(false)}
+				sale_id={sale_id}
+				sale_name={sale_name}
+				sale_contact={sale_contact}
+				sale_creditdue={sale_creditdue}
+				onSubmit={getProducts}
+			/>
+			<ModalSaleCredit show={modalCredit} onHide={() => setModalCredit(false)} id={sale_id} />
 		</div>
 	);
 };

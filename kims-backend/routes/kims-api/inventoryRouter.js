@@ -10,6 +10,19 @@ router.get('/', async (req, res) => {
 	res.send(invent);
 });
 
+router.get('/productcount', async (req, res) => {
+	const invent = await Inventory.find().count();
+	if (!invent) return res.status(400).send('Not found');
+	const inventString = String(invent);
+	res.send(inventString);
+});
+
+router.get('/productqnty', async (req, res) => {
+	const invent = await Inventory.find({ product_qnty: { $lte: 100 } });
+	if (!invent) return res.status(400).send('Not found');
+	res.send(invent);
+});
+
 router.get('/:id', async (req, res) => {
 	const invent = await Inventory.findOne({ product_id: req.params.id });
 	if (!invent) return res.status(400).send('Not found');

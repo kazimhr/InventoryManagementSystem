@@ -10,6 +10,20 @@ router.get('/', async (req, res) => {
 	res.send(invent);
 });
 
+router.get('/inflow', async (req, res) => {
+	var d = new Date();
+	var n = d.getMonth() + 1;
+	const posts = await Account.find({ flow: 'Inflow', date: { $gte: `2020-${n}-01`, $lte: `2020-${n}-31` } });
+	res.send(posts);
+});
+
+router.get('/outflow', async (req, res) => {
+	var d = new Date();
+	var n = d.getMonth() + 1;
+	const posts = await Account.find({ flow: 'Outflow', date: { $gte: `2020-${n}-01`, $lte: `2020-${n}-31` } });
+	res.send(posts);
+});
+
 router.get('/:id', async (req, res) => {
 	const invent = await Account.findOne({ _id: req.params.id });
 	if (!invent) return res.status(400).send('Not found');

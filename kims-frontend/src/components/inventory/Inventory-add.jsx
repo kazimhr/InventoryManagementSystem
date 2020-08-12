@@ -25,7 +25,7 @@ function MyVerticallyCenteredModal(props) {
 				}
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log('Id not in Inventory');
 				setIdcheck(false);
 			});
 	};
@@ -87,6 +87,7 @@ function MyVerticallyCenteredModal(props) {
 								required
 								placeholder="Unique id"
 								min="0"
+								onBlur={() => Idchecking(product_id)}
 								onChange={(e) => {
 									setProduct_id(e.target.value);
 								}}
@@ -105,7 +106,6 @@ function MyVerticallyCenteredModal(props) {
 								required
 								type="text"
 								placeholder="Name"
-								onClick={() => Idchecking(product_id)}
 								onChange={(e) => {
 									setProduct_name(e.target.value);
 								}}
@@ -123,7 +123,6 @@ function MyVerticallyCenteredModal(props) {
 								min="0"
 								type="number"
 								placeholder="Quantity"
-								onClick={() => Idchecking(product_id)}
 								onChange={(e) => {
 									setProduct_qnty(e.target.value);
 								}}
@@ -141,7 +140,6 @@ function MyVerticallyCenteredModal(props) {
 								min="0"
 								type="number"
 								placeholder="Unit Price"
-								onClick={() => Idchecking(product_id)}
 								onChange={(e) => {
 									setPrice(e.target.value);
 								}}
@@ -159,7 +157,6 @@ function MyVerticallyCenteredModal(props) {
 									required
 									as="select"
 									custom
-									onClick={() => Idchecking(product_id)}
 									onChange={(e) => {
 										setCompany(e.target.value);
 									}}

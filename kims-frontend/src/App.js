@@ -4,8 +4,8 @@ import './App.css';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
-import Sidebar from './components/Sidebar';
-import NavbarTop from './components/Navbar';
+import Sidebar from './components/Static/Sidebar';
+import NavbarTop from './components/Static/Navbar';
 import Dashboard from './components/Dashboard';
 import Inventory from './components/inventory/Inventory';
 import Salesperson from './components/sales/Salesperson';
@@ -26,8 +26,6 @@ function App() {
 					<Route path="/not-found" component={Notfound} />
 					<Route path="/invoices" component={Invoices} />
 					{userService.isAdmin() && <Route path="/accounts" component={Accounts} />}
-					{/* <Route path="/purchase" component={Purchase} />
-					<Route path="/retailers" component={Retailers} /> */}
 					<Route path="/salesperson" component={Salesperson} />
 					<Route path="/inventory" component={Inventory} />
 					<Route path="/" exact component={Dashboard} />

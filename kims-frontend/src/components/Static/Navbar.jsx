@@ -1,10 +1,10 @@
 import React from 'react';
-import LoginModal from './auth/LoginModal';
-import userService from '../services/UserServices';
-import RegisterModal from './auth/RegisterModal';
-import { toast } from 'react-toastify';
-import Button from '@material-ui/core/Button';
-import { Navbar, Nav } from 'react-bootstrap';
+import LoginModal from '../auth/LoginModal';
+import userService from '../../services/UserServices';
+import RegisterModal from '../auth/RegisterModal';
+import { toast } from '../../../node_modules/react-toastify';
+import Button from '../../../node_modules/@material-ui/core/Button';
+import { Navbar, Nav } from '../../../node_modules/react-bootstrap';
 
 const NavbarTop = () => {
 	const [ LoginShow, setLoginShow ] = React.useState(false);
