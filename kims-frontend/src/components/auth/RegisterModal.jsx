@@ -33,10 +33,18 @@ const RegisterModal = (props) => {
 		}
 	};
 
+	const onClose = () => {
+		props.onHide();
+		setName('');
+		setPassword('');
+		setEmail('');
+		setConfirmPassword('');
+	};
+
 	return (
 		<div className="content-div">
 			<Modal {...props} backdrop="static" keyboard={false}>
-				<Modal.Header closeButton>
+				<Modal.Header>
 					<Modal.Title>Welcome!</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -83,7 +91,7 @@ const RegisterModal = (props) => {
 							<Button variant="primary" onClick={submitCheck}>
 								Submit
 							</Button>
-							<Button variant="secondary" onClick={props.onHide}>
+							<Button variant="secondary" onClick={onClose}>
 								Close
 							</Button>
 						</Modal.Footer>

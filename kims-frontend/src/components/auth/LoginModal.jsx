@@ -11,10 +11,16 @@ const LoginModal = (props) => {
 		return new Promise((res) => setTimeout(res, delay));
 	}
 
+	const onClose = () => {
+		props.onHide();
+		setEmail('kazimhr@hotmail.com');
+		setPassword('test');
+	};
+
 	return (
 		<div className="content-div-s">
 			<Modal {...props} backdrop="static" keyboard={false}>
-				<Modal.Header closeButton>
+				<Modal.Header>
 					<Modal.Title>Login</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -62,7 +68,7 @@ const LoginModal = (props) => {
 							>
 								Submit
 							</Button>
-							<Button variant="secondary" onClick={props.onHide}>
+							<Button variant="secondary" onClick={onClose}>
 								Close
 							</Button>
 						</Modal.Footer>
