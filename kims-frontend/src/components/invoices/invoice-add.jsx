@@ -3,6 +3,7 @@ import { Modal, Button, Form, Col } from 'react-bootstrap';
 import invoiceService from '../../services/InvoiceServices';
 import inventoryService from '../../services/InventoryServices';
 import saleService from '../../services/SaleServices';
+import { toast } from 'react-toastify';
 
 function InvoiceAdd(props) {
 	const [ validated, setValidated ] = React.useState(false);
@@ -22,10 +23,12 @@ function InvoiceAdd(props) {
 	const handleSubmit = (event) => {
 		const form = event.currentTarget;
 		if (form.checkValidity() === false) {
+			toast.error('Cant leave fields empty.', {
+				position: toast.POSITION.TOP_LEFT
+			});
 			event.preventDefault();
 			event.stopPropagation();
 		} else {
-			// console.log('inside');
 			setValidated(true);
 			var total = 0;
 			for (var i = 0; i < singlecost.length; i++) {
@@ -88,7 +91,6 @@ function InvoiceAdd(props) {
 		inventoryService
 			.getSingleinventory(id)
 			.then((data) => {
-				console.log(data);
 				list[index] = data.product_qnty;
 				setCheckQnty(list);
 			})
@@ -105,7 +107,6 @@ function InvoiceAdd(props) {
 			setAddError(true);
 		} else {
 			inventoryService.getSingleinventory(product_details[index].product_id).then((data) => {
-				console.log(data.price);
 				var pricing = product_details[index].qnty * data.price;
 				list[index] = pricing;
 				setSingleCost(list);
@@ -115,7 +116,7 @@ function InvoiceAdd(props) {
 
 	const checkSales = (e) => {
 		setSalesError(false);
-		saleService.getSinglesale(salesman_id).then((data) => console.log(data)).catch((err) => {
+		saleService.getSinglesale(salesman_id).then((data) => {}).catch((err) => {
 			console.log(err);
 			setSalesError(true);
 		});
@@ -144,10 +145,16 @@ function InvoiceAdd(props) {
 			</Modal.Header>
 			<Modal.Body>
 				<Form noValidate validated={validated} onSubmit={handleSubmit}>
-					<Form.Group as={Col} md="4" controlId="validationCustom01" style={{ textAlign: 'center' }}>
+					<Form.Group
+						as={Col}
+						md="4"
+						controlId="validationCustom01"
+						style={{ textAlign: 'center', margin: 'auto', marginBottom: '20px' }}
+					>
 						<Form.Label>Salesman Id</Form.Label>
 						<Form.Control
 							required
+							min="1"
 							type="number"
 							placeholder="Salesman Id"
 							value={salesman_id}
@@ -168,6 +175,7 @@ function InvoiceAdd(props) {
 									<Form.Label>Product Id</Form.Label>
 									<Form.Control
 										required
+										min="1"
 										name="product_id"
 										type="number"
 										placeholder="Product Id"
@@ -195,7 +203,7 @@ function InvoiceAdd(props) {
 									<Form.Label>Quantity</Form.Label>
 									<Form.Control
 										required
-										min="0"
+										min="1"
 										name="qnty"
 										type="number"
 										placeholder="Quantity"

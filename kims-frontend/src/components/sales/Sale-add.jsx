@@ -22,7 +22,6 @@ function MyVerticallyCenteredModal(props) {
 				}
 			})
 			.catch((err) => {
-				console.log(err);
 				setIdcheck(false);
 			});
 	};
@@ -51,6 +50,9 @@ function MyVerticallyCenteredModal(props) {
 					console.log(err);
 				});
 		}
+
+		event.preventDefault();
+		event.stopPropagation();
 	};
 
 	return (
@@ -78,6 +80,7 @@ function MyVerticallyCenteredModal(props) {
 								required
 								placeholder="Unique id"
 								min="0"
+								onBlur={() => Idchecking(salesman_id)}
 								onChange={(e) => {
 									setSalesman_id(e.target.value);
 								}}
@@ -96,7 +99,6 @@ function MyVerticallyCenteredModal(props) {
 								required
 								type="text"
 								placeholder="Name"
-								onClick={() => Idchecking(salesman_id)}
 								onChange={(e) => {
 									setSalesman_name(e.target.value);
 								}}
@@ -112,8 +114,6 @@ function MyVerticallyCenteredModal(props) {
 							<ReactBootstrap.Form.Control
 								required
 								type="number"
-								placeholder="XXXX-XXXXXXX"
-								onClick={() => Idchecking(salesman_id)}
 								onChange={(e) => {
 									setSalesman_contact(e.target.value);
 								}}
@@ -131,7 +131,6 @@ function MyVerticallyCenteredModal(props) {
 								min="0"
 								type="number"
 								placeholder="Credit Due"
-								onClick={() => Idchecking(salesman_id)}
 								onChange={(e) => {
 									setCredit_due(e.target.value);
 								}}

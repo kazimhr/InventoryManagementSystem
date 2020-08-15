@@ -49,8 +49,8 @@ const Invoice = (props) => {
 		return (
 			<tr key={index}>
 				<td>{invoice.salesman_id}</td>
-				<td>
-					<table>
+				<td style={{ textAlign: 'center' }}>
+					<table style={{ width: '80%', margin: 'auto' }}>
 						<thead>
 							<tr>
 								<th>Product Id</th>

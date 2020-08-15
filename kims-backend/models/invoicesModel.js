@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const Joi = require('@hapi/joi');
 
-const productDetailSchema = new mongoose.Schema({ product_id: Number, qnty: Number });
+const productDetailSchema = new mongoose.Schema({
+	product_id: { type: Number, required: true },
+	qnty: { type: Number, required: true }
+});
 
 const invoicesSchema = mongoose.Schema({
 	salesman_id: Number,
