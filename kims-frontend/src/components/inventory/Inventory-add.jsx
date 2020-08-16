@@ -92,7 +92,7 @@ function MyVerticallyCenteredModal(props) {
 									setProduct_id(e.target.value);
 								}}
 							/>
-							<span className={idcheck === true ? 'err-normal' : 'err-hidden'}>Id is not unique</span>
+							<span className={idcheck === true ? 'err-normal' : 'err-hidden'}>Id is not unique!</span>
 						</ReactBootstrap.Col>
 						<ReactBootstrap.Form.Control.Feedback>Looks good!</ReactBootstrap.Form.Control.Feedback>
 						<span />

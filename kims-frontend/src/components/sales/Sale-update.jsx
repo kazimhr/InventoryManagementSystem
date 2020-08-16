@@ -88,8 +88,9 @@ function MyVerticallyCenteredModalUpdate(props) {
 								value={salesman_contact}
 								required
 								min="0"
-								type="number"
-								placeholder="Contact"
+								type="tel"
+								pattern="[0-9]{4}[0-9]{7}"
+								placeholder="XXXXXXXXXXX"
 								onChange={(e) => {
 									setSalesman_contact(e.target.value);
 								}}

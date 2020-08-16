@@ -30,7 +30,7 @@ router.get('/:id', async (req, res) => {
 	res.send(invent);
 });
 
-router.post('/post', validateAccount, async (req, res) => {
+router.post('/post', auth, admin, validateAccount, async (req, res) => {
 	const postInventory = new Account({
 		flow: req.body.flow,
 		amount: req.body.amount

@@ -59,6 +59,7 @@ ul li a {
 	display: block;
 	color: red;
 	font-family: 'Times New Roman', Times, serif;
+	padding: 8px;
 }
 
 .err-hidden {
